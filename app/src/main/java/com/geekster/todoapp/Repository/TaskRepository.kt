@@ -20,12 +20,4 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
         taskDao.deleteCompletedTasks()
     }
 
-    fun getTasksOrderedByDueDate(): LiveData<List<Task>> {
-        return taskDao.getTasksOrderedByDueDate()
-    }
-
-    // Function to get tasks ordered by completion status
-    fun getTasksOrderedByCompletionStatus(): LiveData<List<Task>> {
-        return taskDao.getTasksOrderedByCompletionStatus()
-    }
 }

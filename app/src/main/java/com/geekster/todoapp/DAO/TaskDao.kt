@@ -22,14 +22,5 @@ interface TaskDao {
     suspend fun deleteCompletedTasks()
 
 
-    @Query("SELECT * FROM my_tasks ORDER BY dueDate ASC")
-    fun getTasksOrderedByDueDate(): LiveData<List<Task>>
 
-
-    @Query("SELECT * FROM my_tasks ORDER BY isCompleted ASC")
-    fun getTasksOrderedByCompletionStatus(): LiveData<List<Task>>
-
-
-    @Query("UPDATE my_tasks SET taskName = :newName WHERE id = :taskId")
-    suspend fun updateTaskName(taskId: Long, newName: String)
 }

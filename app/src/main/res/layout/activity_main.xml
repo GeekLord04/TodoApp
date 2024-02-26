@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
         android:backgroundTint="#E3E3E3"
+        app:cardElevation="6dp"
         app:cardCornerRadius="20dp">
 
         <LinearLayout
@@ -87,8 +88,10 @@
                 android:layout_marginBottom="16dp"
                 android:paddingTop="10dp"
                 android:text="Tasks"
+                android:drawablePadding="10dp"
                 android:textSize="24sp"
                 android:textStyle="bold" />
+
 
             <Button
                 android:id="@+id/deleteCompletedTasksButton"
