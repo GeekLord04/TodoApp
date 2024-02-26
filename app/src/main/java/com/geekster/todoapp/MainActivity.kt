@@ -11,6 +11,7 @@ import com.geekster.todoapp.models.Task
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
@@ -45,11 +46,23 @@ class MainActivity : AppCompatActivity() {
 
         var formattedDate = ""
         // Set up due date selection listener
+
         datePicker.addOnPositiveButtonClickListener { timestamp ->
+            val calendar = Calendar.getInstance().time
             val selectedDate = Date(timestamp)
-            formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate)
-            binding.dueDateEditText.setText(formattedDate)
+            if (selectedDate < calendar){
+                Toast.makeText(applicationContext, "Deadline can't be set on or before current Date", Toast.LENGTH_SHORT).show()
+                binding.addTaskButton.isClickable = false
+            }
+            else if(selectedDate >= calendar){
+                formattedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(selectedDate)
+                binding.dueDateEditText.setText(formattedDate)
+                binding.addTaskButton.isClickable = true
+            }
+
         }
+
+
 
 
         binding.addTaskButton.setOnClickListener {
@@ -61,10 +74,9 @@ class MainActivity : AppCompatActivity() {
                 // Parse the due date string into a Long value representing milliseconds
                 val dueDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dueDateText)?.time ?: 0L
 
-                // Create a Task object with the parsed due date
                 val task = Task(taskName = taskName, dueDate = dueDate, isCompleted = isCompleted)
 
-                // Insert the task into the database using the ViewModel
+
                 viewModel.insert(task)
 
                 // Clear input fields after adding the task
